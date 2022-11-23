@@ -1,5 +1,6 @@
 {
   "expo": {
+    "jsEngine": "hermes",
     "name": "comanda-virtual-mobile",
     "slug": "comanda-virtual-mobile",
     "version": "1.0.0",
@@ -12,7 +13,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/7d60867a-aded-45ff-8ca9-a9d84da25cc0"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -24,10 +26,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.m1guelsb.comandavirtualmobile"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7d60867a-aded-45ff-8ca9-a9d84da25cc0"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }
