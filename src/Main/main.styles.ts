@@ -5,9 +5,9 @@ const isAndroid = Platform.OS === 'android';
 
 export const Container = styled.SafeAreaView`
   margin-top: ${isAndroid ? `${StatusBar.currentHeight}px` : '0'};
-  padding: 24px;
+  padding: 16px;
   flex-grow: 1;
   flex-direction: column;
   gap: 24px;
-  background-color: #f1f1f1;
+  background-color: #ffeded;
 `;

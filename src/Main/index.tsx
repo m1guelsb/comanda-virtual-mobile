@@ -1,15 +1,33 @@
-import { Header } from '../components/Header';
-import { Categories } from '../components/Categories';
-import { Footer } from '../components/Footer';
 import { Container } from './main.styles';
+import { Header, Footer } from '@/components/layout';
+import { Categories, Menu } from '@/components/data-display';
+import { TableModal } from '@/components/overlay';
+import { useState } from 'react';
+import { Button } from '@/components/form';
+
 export const Main = () => {
+  const [isTableModalVisible, setIsTableModalVisible] = useState(false);
+
   return (
-    <Container>
-      <Header />
+    <>
+      <Container>
+        <Header />
 
-      <Categories />
+        <Categories />
 
-      <Footer />
-    </Container>
+        <Menu />
+
+        <Footer>
+          <Button onPress={() => setIsTableModalVisible(true)}>
+            Novo Pedido
+          </Button>
+        </Footer>
+      </Container>
+
+      <TableModal
+        visible={isTableModalVisible}
+        onClose={() => setIsTableModalVisible(false)}
+      />
+    </>
   );
 };
