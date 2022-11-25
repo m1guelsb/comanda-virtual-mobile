@@ -1,4 +1,4 @@
-import { Text } from '../Text';
+import { Text } from '@/components/typography';
 import { Container } from './header.styles';
 
 export const Header = () => {
