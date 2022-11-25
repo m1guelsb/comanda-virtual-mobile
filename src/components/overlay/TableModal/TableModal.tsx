@@ -34,7 +34,11 @@ export const TableModal = ({ visible, onClose }: TableModalProps) => {
 
             <Button
               disabled={tableValue ? false : true}
-              onPress={() => alert(tableValue)}
+              onPress={() => {
+                alert(tableValue);
+                setTableValue('');
+                onClose();
+              }}
             >
               Salvar
             </Button>

@@ -4,7 +4,7 @@ export const Overlay = styled.KeyboardAvoidingView`
   flex: 1;
   align-items: stretch;
   justify-content: center;
-  padding: 0 24px;
+  padding: 0 16px;
   background-color: rgba(0, 0, 0, 0.6);
 `;
 
@@ -22,12 +22,10 @@ export const Header = styled.View`
   margin-bottom: 24px;
 `;
 
-export const Form = styled.View`
-  display: flex;
-`;
+export const Form = styled.View``;
 
 export const Input = styled.TextInput`
-  border: 1px solid #dfdfdf;
+  border: 1px solid #d73035;
   background-color: #ffffff;
   border-radius: 8px;
   padding: 12px;

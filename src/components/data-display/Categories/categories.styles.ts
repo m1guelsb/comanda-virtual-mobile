@@ -21,6 +21,6 @@ export const Icon = styled.View`
   justify-content: center;
   border-radius: 24px;
   box-shadow: 0px 2px 1px rgba(0, 0, 0, ${isAndroid ? 1 : 0.1});
-
+  border: 1px solid #cfcfcf;
   background-color: #ffffff;
 `;

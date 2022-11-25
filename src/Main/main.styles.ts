@@ -9,5 +9,5 @@ export const Container = styled.SafeAreaView`
   flex-grow: 1;
   flex-direction: column;
   gap: 24px;
-  background-color: #ffeded;
+  background-color: #fafafa;
 `;

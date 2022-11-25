@@ -27,7 +27,13 @@ export const Menu = () => {
       <Container>
         <FlatList
           showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+          ItemSeparatorComponent={() => (
+            <View
+              style={{
+                height: 16,
+              }}
+            />
+          )}
           data={productList}
           contentContainerStyle={{ paddingVertical: 8 }}
           keyExtractor={(product) => product.id}

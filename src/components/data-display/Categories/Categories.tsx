@@ -34,7 +34,7 @@ export const Categories = () => {
           const isSelected = selectedCategory === category.id;
           return (
             <CategoryItem onPress={() => handleSelectCategory(category.id)}>
-              <Icon>
+              <Icon style={{ borderColor: isSelected ? '#d73035' : '#cfcfcf' }}>
                 <Text opacity={isSelected ? 1 : 0.5}>{category.icon}</Text>
               </Icon>
               <Text size={14} weight={'500'} opacity={isSelected ? 1 : 0.5}>
