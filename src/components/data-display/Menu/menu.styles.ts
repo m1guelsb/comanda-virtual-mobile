@@ -5,7 +5,7 @@ export const Container = styled.View`
   flex: 1;
 `;
 
-export const Product = styled.TouchableOpacity`
+export const Product = styled.View`
   flex-direction: row;
   align-items: center;
   border-radius: 8px;

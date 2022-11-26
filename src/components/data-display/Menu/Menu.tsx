@@ -14,7 +14,10 @@ import {
 import { SvgXml } from 'react-native-svg';
 import { add } from '@/assets/icons';
 
-export const Menu = () => {
+interface MenuProps {
+  onAddToCart(product: Product): void;
+}
+export const Menu = ({ onAddToCart }: MenuProps) => {
   const { data: productList } = useQuery({
     queryKey: ['products'],
     queryFn: async () =>
@@ -77,11 +80,19 @@ export const Menu = () => {
                     >
                       {formatCurrency(product.price)}
                     </Text>
-                    <TouchableOpacity>
-                      <SvgXml xml={add} />
-                    </TouchableOpacity>
                   </View>
                 </Details>
+                <TouchableOpacity onPress={() => onAddToCart(product)}>
+                  <View
+                    style={{
+                      flex: 1,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <SvgXml xml={add} />
+                  </View>
+                </TouchableOpacity>
               </ProductItem>
             );
           }}
