@@ -1,17 +1,22 @@
+import { useState } from 'react';
 import { close } from '@/assets/icons';
 import { Button } from '@/components/form';
 import { Text } from '@/components/typography';
-import { useState } from 'react';
 import { Modal, TouchableOpacity } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import { Container, Form, Header, Input, Overlay } from './table-modal.styles';
 
 interface TableModalProps {
+  setSelectedTable(table: string): void;
   visible: boolean;
   onClose(): void;
 }
-export const TableModal = ({ visible, onClose }: TableModalProps) => {
-  const [tableValue, setTableValue] = useState('');
+export const TableModal = ({
+  visible,
+  onClose,
+  setSelectedTable,
+}: TableModalProps) => {
+  const [table, setTable] = useState('');
 
   return (
     <Modal visible={visible} transparent animationType="fade">
@@ -29,14 +34,14 @@ export const TableModal = ({ visible, onClose }: TableModalProps) => {
               placeholder="Número da mesa"
               placeholderTextColor={'#666666'}
               keyboardType="numeric"
-              onChangeText={(value) => setTableValue(value)}
+              onChangeText={(value) => setTable(value)}
             />
 
             <Button
-              disabled={tableValue ? false : true}
+              disabled={table ? false : true}
               onPress={() => {
-                alert(tableValue);
-                setTableValue('');
+                setSelectedTable(table);
+                setTable('');
                 onClose();
               }}
             >
