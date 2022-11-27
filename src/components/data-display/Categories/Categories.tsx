@@ -1,20 +1,34 @@
 import { useState } from 'react';
 import { FlatList, View } from 'react-native';
-import { useQuery } from '@tanstack/react-query';
 import { Text } from '@/components/typography';
-import { api } from '@/services/axios';
 import { Category as CategoryItem, Container, Icon } from './categories.styles';
-import type { Category } from '@/types';
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { useListCategories, useListProducts } from '@/hooks/api';
 
 export const Categories = () => {
-  const { data: categoryList } = useQuery({
-    queryKey: ['categories'],
-    queryFn: async () =>
-      await api.get<Category[]>('/categories').then((res) => res.data),
-    refetchOnWindowFocus: false,
+  const { categoryList } = useListCategories();
+
+  const [selectedCategory, setSelectedCategory] = useState<
+    string | undefined
+  >();
+
+  const queryClient = useQueryClient();
+
+  const { refetch: refetchProductList } = useListProducts({
+    filterParams: {
+      categoryId: selectedCategory,
+    },
+    queryConfigs: {
+      onSuccess(data) {
+        queryClient.setQueriesData(['products'], data);
+      },
+    },
   });
 
-  const [selectedCategory, setSelectedCategory] = useState('');
+  useEffect(() => {
+    refetchProductList();
+  }, [selectedCategory]);
 
   const handleSelectCategory = (categoryId: string) => {
     const category = selectedCategory === categoryId ? '' : categoryId;
