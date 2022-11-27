@@ -13,6 +13,7 @@ module.exports = function (api) {
             '@/assets': './src/assets',
             '@/utils': './src/utils',
             '@/types': './src/types',
+            '@/screens': './src/screens',
           },
         },
       ],

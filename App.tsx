@@ -2,7 +2,7 @@ import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { Main } from './src/Main';
+import { Home } from '@/screens';
 
 export default function App() {
   const [isFontsLoaded] = useFonts({
@@ -19,7 +19,7 @@ export default function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <StatusBar style="dark" />
-        <Main />
+        <Home />
       </QueryClientProvider>
     </>
   );

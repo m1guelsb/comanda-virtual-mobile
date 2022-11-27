@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Container } from './main.styles';
+import { Container } from './home.styles';
 import { Header, Footer } from '@/components/layout';
 import { Categories, Menu } from '@/components/data-display';
 import { TableModal } from '@/components/overlay';
@@ -7,7 +7,7 @@ import { Button } from '@/components/form';
 import { Cart } from '@/components/data-display';
 import { CartItem, Product } from '@/types';
 
-export const Main = () => {
+export const Home = () => {
   const [isTableModalVisible, setIsTableModalVisible] = useState(false);
   const [selectedTable, setSelectedTable] = useState('');
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
