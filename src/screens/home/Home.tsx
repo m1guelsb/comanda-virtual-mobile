@@ -1,16 +1,23 @@
 import { useState } from 'react';
+import { useAtom } from 'jotai';
 import { Container } from './home.styles';
 import { Header, Footer } from '@/components/layout';
 import { Categories, Menu } from '@/components/data-display';
 import { TableModal } from '@/components/overlay';
 import { Button } from '@/components/form';
 import { Cart } from '@/components/data-display';
-import { CartItem, Product } from '@/types';
+import type { CartItem, Product } from '@/types';
+import { useCreateOrder } from '@/hooks/api';
+import { isConfirmationModalVisible } from '@/store/orders';
+import { useIsFetching } from '@tanstack/react-query';
 
 export const Home = () => {
   const [isTableModalVisible, setIsTableModalVisible] = useState(false);
   const [selectedTable, setSelectedTable] = useState('');
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  const [, setIsConfirmOrderModalVisible] = useAtom(isConfirmationModalVisible);
+  const isProductListFetching = useIsFetching({ queryKey: ['products'] });
 
   const handleAddToCart = (product: Product) => {
     if (!selectedTable) {
@@ -67,6 +74,28 @@ export const Home = () => {
     setSelectedTable('');
     setCartItems([]);
   };
+
+  const { createOrder, isLoading } = useCreateOrder();
+
+  const handleCreateOrder = (cartItems: CartItem[]) => {
+    createOrder(
+      {
+        table: selectedTable,
+        products: cartItems.map((item) => {
+          return {
+            quantity: item.quantity,
+            product: item.product.id,
+          };
+        }),
+      },
+      {
+        onSuccess() {
+          setIsConfirmOrderModalVisible(true);
+        },
+      }
+    );
+  };
+
   return (
     <>
       <Container>
@@ -81,7 +110,10 @@ export const Home = () => {
 
         <Footer>
           {!selectedTable ? (
-            <Button onPress={() => setIsTableModalVisible(true)}>
+            <Button
+              disabled={!!isProductListFetching}
+              onPress={() => setIsTableModalVisible(true)}
+            >
               Novo Pedido
             </Button>
           ) : (
@@ -89,7 +121,11 @@ export const Home = () => {
               onAdd={(product) => handleAddToCart(product)}
               onDecrement={(product) => handleDecrementCartItem(product)}
               cartItems={cartItems}
-              onOrderConfirm={handleResetOrder}
+              orderProps={{
+                createOrder: () => handleCreateOrder(cartItems),
+                isLoading,
+              }}
+              resetOrder={handleResetOrder}
             />
           )}
         </Footer>

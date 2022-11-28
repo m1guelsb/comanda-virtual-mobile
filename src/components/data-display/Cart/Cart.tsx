@@ -1,4 +1,10 @@
-import { FlatList, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { useAtom } from 'jotai';
 import { CartItem as CartItemType, Product } from '@/types';
 import { API_URL } from '@env';
 import { Actions, Image, Item, ProductContainer } from './cart.styles';
@@ -7,22 +13,29 @@ import { formatCurrency } from '@/utils/formatCurrency';
 import { SvgXml } from 'react-native-svg';
 import { add, minus } from '@/assets/icons';
 import { OrderConfirmedModal } from '@/components/overlay';
-import { useState } from 'react';
 import { Button } from '@/components/form';
+import { isConfirmationModalVisible } from '@/store/orders';
 
 interface CartProps {
   cartItems: CartItemType[] | undefined;
   onAdd(product: Product): void;
   onDecrement(product: Product): void;
-  onOrderConfirm(): void;
+  resetOrder(): void;
+  orderProps: {
+    createOrder(): void;
+    isLoading: boolean;
+  };
 }
 export const Cart = ({
   cartItems,
   onAdd,
   onDecrement,
-  onOrderConfirm,
+  resetOrder,
+  orderProps,
 }: CartProps) => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useAtom(
+    isConfirmationModalVisible
+  );
 
   const totalPrice = cartItems?.reduce((acc, cartItem) => {
     return acc + cartItem.quantity * cartItem.product.price;
@@ -33,7 +46,7 @@ export const Cart = ({
       <OrderConfirmedModal
         onOk={() => {
           setIsModalVisible(false);
-          onOrderConfirm();
+          resetOrder();
         }}
         visible={isModalVisible}
       />
@@ -113,12 +126,15 @@ export const Cart = ({
         </View>
 
         <Button
+          style={{ flex: 1, marginLeft: 8 }}
           disabled={cartItems && cartItems.length > 0 ? false : true}
-          onPress={() => {
-            setIsModalVisible(true);
-          }}
+          onPress={() => orderProps.createOrder()}
         >
-          Confirmar pedido
+          {orderProps.isLoading ? (
+            <ActivityIndicator size={26} />
+          ) : (
+            'Confirmar pedido'
+          )}
         </Button>
       </View>
     </>
