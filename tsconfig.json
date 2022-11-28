@@ -10,7 +10,8 @@
       "@/utils/*": ["./src/utils/*"],
       "@/types": ["./src/types"],
       "@/screens": ["./src/screens"],
-      "@/hooks/*": ["./src/hooks/*"]
+      "@/hooks/*": ["./src/hooks/*"],
+      "@/store/*": ["./src/store/*"]
     }
   }
 }
