@@ -5,9 +5,10 @@ import { Category as CategoryItem, Container, Icon } from './categories.styles';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useListCategories, useListProducts } from '@/hooks/api';
+import { CategoriesSkeleton } from '@/components/feedback';
 
 export const Categories = () => {
-  const { categoryList } = useListCategories();
+  const { categoryList, isLoading } = useListCategories();
 
   const [selectedCategory, setSelectedCategory] = useState<
     string | undefined
@@ -37,27 +38,33 @@ export const Categories = () => {
 
   return (
     <Container>
-      <FlatList
-        horizontal
-        showsVerticalScrollIndicator={false}
-        ItemSeparatorComponent={() => <View style={{ width: 24 }} />}
-        contentContainerStyle={{ padding: 8 }}
-        data={categoryList}
-        keyExtractor={(category) => category.id}
-        renderItem={({ item: category }) => {
-          const isSelected = selectedCategory === category.id;
-          return (
-            <CategoryItem onPress={() => handleSelectCategory(category.id)}>
-              <Icon style={{ borderColor: isSelected ? '#d73035' : '#cfcfcf' }}>
-                <Text opacity={isSelected ? 1 : 0.5}>{category.icon}</Text>
-              </Icon>
-              <Text size={14} weight={'500'} opacity={isSelected ? 1 : 0.5}>
-                {category.name}
-              </Text>
-            </CategoryItem>
-          );
-        }}
-      />
+      {isLoading ? (
+        <CategoriesSkeleton />
+      ) : (
+        <FlatList
+          horizontal
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <View style={{ width: 24 }} />}
+          contentContainerStyle={{ padding: 8 }}
+          data={categoryList}
+          keyExtractor={(category) => category.id}
+          renderItem={({ item: category }) => {
+            const isSelected = selectedCategory === category.id;
+            return (
+              <CategoryItem onPress={() => handleSelectCategory(category.id)}>
+                <Icon
+                  style={{ borderColor: isSelected ? '#d73035' : '#cfcfcf' }}
+                >
+                  <Text opacity={isSelected ? 1 : 0.5}>{category.icon}</Text>
+                </Icon>
+                <Text size={14} weight={'500'} opacity={isSelected ? 1 : 0.5}>
+                  {category.name}
+                </Text>
+              </CategoryItem>
+            );
+          }}
+        />
+      )}
     </Container>
   );
 };
